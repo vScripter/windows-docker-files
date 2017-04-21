@@ -1,4 +1,4 @@
-# psvmware
+# docker-psvmware
 VMware Modules/Tools Docker Image
 
 ### Download
