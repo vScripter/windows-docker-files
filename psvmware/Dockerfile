@@ -2,9 +2,9 @@ FROM microsoft/windowsservercore
 
 LABEL \
 author="Kevin Kirkpatrick" \
-description="This image is pre-configured with VMware \
-PowerShell Modules maintained by VMware, as well as the \
-community."
+description="This image is pre-configured with PowerShell \
+Modules maintained by VMware, as well as the \
+VMware community."
 
 CMD ["C:\\windows\\system32\\windowspowershell\\v1.0\\powershell.exe"]
 
@@ -16,4 +16,4 @@ Install-Module GitHubRepository -Force -Confirm:$false; \
 Install-Module VMware.PowerCLI -Force -Confirm:$false; \
 Install-Module powervra -Force -Confirm:$false; \
 Install-Module powervro -Force -Confirm:$false; \
-Install-GitHubRepository -Owner vmware -Repository powernsx -Branch master -DestinationPath $env:USERPROFILE\Documents\WindowsPowerShell\Modules; \
+Install-GitHubRepository -Owner vmware -Repository powernsx -Branch master -DestinationPath $env:programfiles\WindowsPowerShell\Modules; \
