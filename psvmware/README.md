@@ -10,7 +10,7 @@ Docker image running popular PowerShell modules from VMware, as well as the VMwa
 
 
 ## Pull
-You can pull the image down by running:
+You can pull the image down from [Docker Hub](https://hub.docker.com/r/vscripter/psvmware/) by running:
 
 `docker pull vscripter/psvmware`
 
