@@ -1,16 +1,5 @@
-# docker-psvmware
-Docker image running popular PowerShell modules from VMware, as well as the VMware community.
+# Windows Dockerfiles
 
-### Download
-Download the Docker file to your desired location. 
+This is a collection of Dockerfiles that can be used in Windows Server containers.
 
-### Build
-Change directories to where you save the dockerfile to and run:
-
-`docker build -t psvmware .`
-
-You can also build it direct from this repository:
-
-
-### Run
-`docker run --rm -it psvmware`
+Each directory represents an individual configuration and should contain a `README` file with additional detail.
