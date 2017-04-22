@@ -1,5 +1,12 @@
 # psvmware
-Docker image running popular PowerShell modules from VMware, as well as the VMware community.
+Docker image running popular PowerShell modules from VMware, as well as the VMware community. It includes the following modules:
+
+| Module Name | Source |
+|:----|:----|
+| PowerCLI | PowerShell Gallery |
+| powervro | PowerShell Gallery |
+| powervra | PowerShell Gallery |
+| powernsx | github.com/vmware/powernsx/#master |
 
 
 ## Pull
