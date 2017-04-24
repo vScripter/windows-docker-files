@@ -9,7 +9,7 @@ Write-Host Starting build
 
 Write-Host Updating base images
 docker pull microsoft/windowsservercore
-docker pull microsoft/nanoserver
+#docker pull microsoft/nanoserver
 
 if ( $env:APPVEYOR_PULL_REQUEST_NUMBER ) {
   Write-Host Pull request $env:APPVEYOR_PULL_REQUEST_NUMBER
