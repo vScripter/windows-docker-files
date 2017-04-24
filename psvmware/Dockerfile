@@ -17,3 +17,8 @@ Install-Module VMware.PowerCLI -Force -Confirm:$false; \
 Install-Module powervra -Force -Confirm:$false; \
 Install-Module powervro -Force -Confirm:$false; \
 Install-GitHubRepository -Owner vmware -Repository powernsx -Branch master -DestinationPath $env:programfiles\WindowsPowerShell\Modules; \
+mkdir c:\src; \
+Install-GitHubRepository -Owner vmware -Repository PowerCLI-Example-Scripts -Branch master -DestinationPath c:\src\; \
+Rename-Item c:\src\PowerCLI-Example-Scripts vmware -Force;
+
+COPY Microsoft.PowerShell_profile.ps1 /Users/ContainerAdministrator/Documents/WindowsPowerShell
