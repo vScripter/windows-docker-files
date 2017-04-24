@@ -21,4 +21,5 @@ mkdir c:\src; \
 Install-GitHubRepository -Owner vmware -Repository PowerCLI-Example-Scripts -Branch master -DestinationPath c:\src\; \
 Rename-Item c:\src\PowerCLI-Example-Scripts vmware -Force;
 
+# Setup PowerShell Profile
 COPY Microsoft.PowerShell_profile.ps1 /Users/ContainerAdministrator/Documents/WindowsPowerShell
