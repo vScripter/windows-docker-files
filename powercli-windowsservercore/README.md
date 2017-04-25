@@ -1,7 +1,7 @@
 # powercli-windowsservercore
-Docker image running popular PowerShell modules & Scripts from VMware, as well as the VMware community.
+Windows Server Core Docker image running popular PowerShell modules & Scripts from VMware, as well as the VMware community.
 
-![](https://github.com/vScripter/windows-docker-files/blob/master/powercli-windowsservercore/docker-powercli-windowsservercore.png)
+> _Note: The main difference between this Docker Image and the Image distributed by VMware, is that this runs on Windows Server Core (vs. Ubuntu/Photon OS)._
 
 ## Image Summary
 ### Modules
@@ -11,26 +11,15 @@ Docker image running popular PowerShell modules & Scripts from VMware, as well a
 | PowerCLI | PowerShell Gallery |
 | powervro | PowerShell Gallery |
 | powervra | PowerShell Gallery |
-| powernsx | github.com/vmware/powernsx/#master |
+| powernsx | [PowerNSX on GitHub](https://github.com/vmware/powernsx/#master) |
 
 ### Scripts
 * Everything available in the [PowerCLI Example Scripts](https://github.com/vmware/PowerCLI-Example-Scripts) repository is available in a PSDrive `P:\`, which is mapped when the PSProfile is loaded.
-
 
 ## Pull
 You can pull the image down from [Docker Hub](https://hub.docker.com/r/vscripter/powercli-windowsservercore/) by running:
 
 `docker pull vscripter/powercli-windowsservercore`
-
-## Build
-You can use this dockerfile to build the image from scratch, if you prefer that route over pulling it down.
-
-* Change directories to where you save the dockerfile to and run:
-
-  `docker build -t powercli-windowsservercore .`
-* If you have the `git` binary available in your `PATH`, you can build directly from this repo:
-
-  `docker build github.com/vScripter/windows-docker-files/powercli-windowsservercore`
 
 ## Run
 Basic summary of switches used in the examples, below:
