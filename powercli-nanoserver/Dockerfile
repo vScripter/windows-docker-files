@@ -30,4 +30,5 @@ Install-Module powervro -Force -Confirm:$false; \
 mkdir c:\src;
 
 # setup PowerShell Profile
+COPY PSEnv.Functions.ps1 /Users/ContainerAdministrator/Documents/WindowsPowerShell
 COPY Microsoft.PowerShell_profile.ps1 /Users/ContainerAdministrator/Documents/WindowsPowerShell
