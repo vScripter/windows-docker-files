@@ -2,7 +2,7 @@
 
 # created 20160421 - Kevin Kirkpatrick (Twitter|GitHub @vScriper)
 
-# create PSDrive
+# create PSDrive and set it as the starting location
 if (Test-Path 'c:\src\vmware'){
     [void](New-PSDrive -Name P -PSProvider FileSystem -Root 'c:\src\vmware')
     Set-Location P:\
@@ -89,10 +89,6 @@ function Get-Environment {
 
 } # end function Start-PowerCLI
 
-
-Set-Alias -Name Start-PowerCLI -Value Start-Environment
-
-
 # setup custom console colors
 $hostUI                        = $host.PrivateData
 $hostUI.ErrorForegroundColor   = 'White'
@@ -102,14 +98,13 @@ $hostUI.DebugBackgroundColor   = 'DarkCyan'
 $hostUI.VerboseBackgroundColor = 'DarkBlue'
 $hostUI.VerboseForegroundColor = 'Cyan'
 
+# setup alias
+Set-Alias -Name Start-PowerCLI -Value Start-Environment
+
+$consoleStatusCheck = $null
+$consoleStatusCheck = Get-ConsoleStatus
 
 Write-Host -Object '[PS Profile Load] Profile load complete.' -ForegroundColor Cyan -BackgroundColor DarkBLue
-
-# set the console widow title
-$consoleStatusCheck        = Get-ConsoleStatus
-$host.UI.RawUI.WindowTitle = "User: $($consoleStatusCheck.User)    Computer: $($consoleStatusCheck.ComputerName)    Admin: $($consoleStatusCheck.IsAdmin)    PSVersion: $($consoleStatusCheck.PSMajorVersion)"
-
-
 Write-Host ' '
 Write-Host 'ComputerName: ' -NoNewline   ; Write-Host "  $($consoleStatusCheck.ComputerName)" -ForegroundColor Green
 Write-Host 'User: ' -NoNewline 			 ; Write-Host "          $($consoleStatusCheck.User)" -ForegroundColor Green
