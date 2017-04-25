@@ -1,36 +1,25 @@
-# powercli-windowsservercore
-Docker image running popular PowerShell modules & Scripts from VMware, as well as the VMware community.
+# powercli-nanoserver
+Windows Nano Server Docker image running popular PowerShell modules & Scripts from VMware, as well as the VMware community.
 
-![](https://github.com/vScripter/windows-docker-files/blob/master/powercli-windowsservercore/docker-powercli-windowsservercore.png)
+More information can be found regarding PowerCLI Core in the documentation found [here](http://powercli-core.readthedocs.io/en/latest/).
+
+> _Note: The main difference between this Docker Image and the Image distributed by VMware, is that this runs on Windows Nano Server (vs. Ubuntu/Photon OS)._
 
 ## Image Summary
 ### Modules
 
 | Module Name | Source |
 |:----|:----|
-| PowerCLI | PowerShell Gallery |
+| PowerCLI | [VMware Flings](https://labs.vmware.com/flings/powercli-core) |
 | powervro | PowerShell Gallery |
 | powervra | PowerShell Gallery |
-| powernsx | github.com/vmware/powernsx/#master |
 
 ### Scripts
-* Everything available in the [PowerCLI Example Scripts](https://github.com/vmware/PowerCLI-Example-Scripts) repository is available in a PSDrive `P:\`, which is mapped when the PSProfile is loaded.
-
 
 ## Pull
-You can pull the image down from [Docker Hub](https://hub.docker.com/r/vscripter/powercli-windowsservercore/) by running:
+You can pull the image down from [Docker Hub](https://hub.docker.com/r/vscripter/powercli-nanoserver/) by running:
 
-`docker pull vscripter/powercli-windowsservercore`
-
-## Build
-You can use this dockerfile to build the image from scratch, if you prefer that route over pulling it down.
-
-* Change directories to where you save the dockerfile to and run:
-
-  `docker build -t powercli-windowsservercore .`
-* If you have the `git` binary available in your `PATH`, you can build directly from this repo:
-
-  `docker build github.com/vScripter/windows-docker-files/powercli-windowsservercore`
+`docker pull vscripter/powercli-nanoserver`
 
 ## Run
 Basic summary of switches used in the examples, below:
@@ -43,11 +32,11 @@ Basic summary of switches used in the examples, below:
 
 Start a container, interactively, and remove the container once exited.
 
-`docker run --rm -it --name psvmw vscripter/powercli-windowsservercore`
+`docker run --rm -it --name psvmw vscripter/powercli-nanoserver`
 
 Start a container, run it in the background, name it `psvmw` map the local directory `c:\src` to the container directory `c:\src` and remove the container, once it is stopped.
 
-`docker run --rm -dt -v "c:\src:c:\src" vscripter/powercli-windowsservercore`
+`docker run --rm -dt -v "c:\src:c:\src" vscripter/powercli-nanoserver`
 
 Run a PowerShell command in a container named `psvmw`, that is running in the background:
 
