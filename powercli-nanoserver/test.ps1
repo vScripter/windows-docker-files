@@ -1,1 +1,1 @@
-docker run --rm powercli-windowsservercore powershell get-environment
+docker run --rm powercli-nanoserver powershell get-environment
