@@ -1,1 +1,0 @@
-docker run --rm powercli-windowsservercore powershell get-environment

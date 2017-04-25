@@ -1,0 +1,1 @@
+docker run --rm vscripter/psvmware powershell get-environment

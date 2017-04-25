@@ -1,1 +1,0 @@
-docker run --rm powercli-nanoserver powershell get-environment
