@@ -22,4 +22,5 @@ Install-GitHubRepository -Owner vmware -Repository PowerCLI-Example-Scripts -Bra
 Rename-Item c:\src\PowerCLI-Example-Scripts vmware -Force;
 
 # Setup PowerShell Profile
+COPY PSEnv.Functions.ps1 /Users/ContainerAdministrator/Documents/WindowsPowerShell
 COPY Microsoft.PowerShell_profile.ps1 /Users/ContainerAdministrator/Documents/WindowsPowerShell
