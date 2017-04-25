@@ -1,0 +1,150 @@
+#!/usr/bin/perl
+
+# *************************************************************************
+# Copyright 2009 VMware, Inc.  All rights reserved.
+# *************************************************************************
+
+#
+# This script is used by Get-VmGuestNetworkAdapter cmdlet to retrieve network adapters available on the guest OS
+#
+# PARAMETERS
+#	   None
+#
+# OUTPUT
+#   This script prints lines containing the following information:
+#      Name=<name>;Description=<description>;IPAddress=<ip>;SubnetMask=<netmask>;DefaultGateway=<gateway>;Mac=<mac>;IPPolicy=<ipPolicy>;DnsPolicy=<dnsPolicy>;DnsServer=<dnsServer1>[,dnsServer2];RouteInterfaceId=<routeInterfaceId>;
+#
+#   name - the name of the network adapter
+#   description - available description;
+#   ip - assigned ip;
+#   netmask - the subnet mask of the network adapter;
+#   gateway - configured gateway;
+#   mac - mac address;
+#   ipPolicy - "static" if you have manually assigned IP information and "dhcp" if dhcp server is used
+#   dnsPolicy - "static" if you have manually assigned IP information and "dhcp" if dhcp server is used
+#   dnsServer1 = primary dns
+#   dnsServer2 - secondary dns;
+#   routeInterfaceId - the id of the interface that route command requires;
+#
+
+#dns servers
+open(LOGFILE, "/etc/resolv.conf") or die $!;
+$dns_policy="";
+$dns_servers="";
+$dns1="";
+$dns2="";
+
+foreach $line (<LOGFILE>) {
+   if($line =~ m/nameserver/){
+
+      $dns=substr $line, 11;
+      chomp($dns);
+
+      if($dns1 == ""){
+         $dns1=$dns;
+      }else{
+         if($dns2 == ""){
+            $dns2=$dns;
+         }
+      }
+   }
+}
+
+if($dns1 ne ""){
+   $dns_servers="DnsServer=$dns1";
+
+   if($dns2 ne ""){
+      $dns_servers="$dns_servers,$dns2;";
+   }else{
+      $dns_servers="$dns_servers;";
+   }
+}
+
+close(LOGFILE);
+
+#default gateway
+$default_gateway="";
+
+$route_output=`route | grep default`;
+
+if($route_output =~ m/default\s*([.\d]*)/ ){
+   $default_gateway=$1;
+}
+
+#ip configuration
+$device_name;
+$name="";
+$ip="";
+$mask="";
+$mac="";
+$description="";
+$dhcp_policy="";
+$gateway="";
+$route_interface_id="";
+
+sub trim($){
+   $string = shift;
+   $string =~ s/^\s+|\s+$//g;
+   return $string ;
+}
+
+sub initializeGatewayAndDhcpPolicy(){
+   $dhcp_output = `cat /etc/sysconfig/network-scripts/ifcfg-$device_name | grep BOOTPROTO`;
+   if($dhcp_output =~ m/BOOTPROTO=(dhcp|static)/){
+      $dhcp_policy="IPPolicy=$1;";
+   }
+   
+   $gateway_output = `cat /etc/sysconfig/network-scripts/ifcfg-$device_name | grep GATEWAY`;
+   if($gateway_output =~ m/GATEWAY=(.*)/){
+      $gateway="DefaultGateway=$1;";
+   }else{
+      $gateway = "DefaultGateway=$default_gateway;";
+   }
+   
+   $dns_policy="DnsPolicy=dhcp;"; 
+   $dnsdhcp_output = `cat /etc/sysconfig/network-scripts/ifcfg-$device_name | grep PEERDNS`;
+   if($dnsdhcp_output =~ m/PEERDNS=(.*)/){
+      if($1 eq "yes" ){
+         $dns_policy="DnsPolicy=dhcp;";
+      }else{
+         $dns_policy="DnsPolicy=static;";
+      }
+   }
+}
+
+foreach $line(`ifconfig`){
+
+   if($line =~ m/^([^\s]+)\s*Link encap:([a-zA-Z0-9\s]*)\s*HWaddr (.*)\n/
+      or $line =~ m/^(lo)\s*Link encap:([a-zA-Z0-9]*).*\n/){
+
+      if($name ne ""){
+         initializeGatewayAndDhcpPolicy();
+         print "$name$description$ip$mask$gateway$mac$dhcp_policy$dns_policy$dns_servers$route_interface_id\n";
+         $dns_policy="";
+         $device_name="";
+         $name="";
+         $ip="";
+         $mask="";
+         $mac="";
+         $description="";
+         $route_interface_id="";
+      }
+
+      
+      $route_interface_id=$device_name=$name=trim($1);
+      $name="Name=$name;";
+      $description=trim($2);
+      $description="Description=$description;";
+      $mac=trim($3);
+      $mac="Mac=$mac;";
+      $route_interface_id="RouteInterfaceId=$route_interface_id;";
+   }
+   
+   if($line =~ m/inet addr:([\.\d]*).*Mask:([\.\d]*)/){
+      $ip="IPAddress=$1;";
+      $mask="SubnetMask=$2;";
+   }   
+}
+
+initializeGatewayAndDhcpPolicy();
+print "$name$description$ip$mask$gateway$mac$dhcp_policy$dns_policy$dns_servers$route_interface_id\n";

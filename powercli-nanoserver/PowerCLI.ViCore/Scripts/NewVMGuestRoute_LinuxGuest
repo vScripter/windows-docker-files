@@ -1,0 +1,61 @@
+#!/usr/bin/perl
+
+# *************************************************************************
+# Copyright 2009 VMware, Inc.  All rights reserved.
+# *************************************************************************/
+
+#
+# This script is used by New-VmGuestRoute cmdlet to create routes on the guest OS
+#
+# PARAMETERS
+#	 destination - destination address
+#   netmask - route netmask
+#   gateway - gateway ip
+#   interface - interface id
+#
+# USAGE
+#   The script is invoked with the following line:
+#      NewVMGuestRoute_LinuxGuest <destination> <netmask> <gateway> <interface>
+#
+# OUTPUT
+#   If this script prints output it is displayed as an error message to the user
+#
+#
+
+$destination=@ARGV[0];
+$netmask= @ARGV[1];
+$gateway=@ARGV[2];
+$interface=@ARGV[3];
+
+#set non persistent routes
+$netmask_string="netmask $netmask";
+
+if(@ARGV[2] eq "*"){
+   $gateway_string="";
+}else{
+   $gateway_string="gw $gateway";
+}
+
+if(@ARGV[3] ne ""){
+   $interface_string="dev $interface";
+}else{
+	print "You must specify a Interface parameter for a Linux guest.";
+	exit;
+}
+
+#execute this line to verify the input
+`route add -net $destination $netmask_string $gateway_string $interface_string`;
+
+if($? == "0"){
+   $file_content = `cat /etc/sysconfig/network-scripts/route-$interface 2> /dev/null`;
+  
+   $identifier = "0";
+   if( $file_content =~ /(GATEWAY|NETMASK|ADDRESS)(\d)=([\d\.]*)?$/ ){
+      $identifier = $2+1;
+   }
+
+  #write data to /etc/sysconfig/network-scripts/route-
+  open(ROUTEFILE, ">>/etc/sysconfig/network-scripts/route-$interface") or die $!;
+  print ROUTEFILE "\nGATEWAY$identifier=$gateway\nNETMASK$identifier=$netmask\nADDRESS$identifier=$destination";
+  close (ROUTEFILE);
+}

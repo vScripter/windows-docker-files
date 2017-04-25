@@ -1,0 +1,181 @@
+#!/usr/bin/perl
+
+# *************************************************************************
+# Copyright 2009 VMware, Inc.  All rights reserved.
+# *************************************************************************
+
+#
+# This script is used by Set-VmGuestNetworkAdapter cmdlet to modify network adapters available on the guest OS
+#
+# PARAMETERS
+#	   None
+#
+# Usage
+#   The scritp is invoked with the following line:
+#      SetVMGuestNetworkInterface_LinuxGuest <device_name> <ipPolicy> <ip> <netmask> <gateway> <dnsPolicy> <dnsServer1> <dnsServer2>;
+#
+#   name - the name of the network adapter
+#   description - available description;
+#   ip - assigned ip;
+#   netmask - the subnet mask of the network adapter;
+#   gateway - configured gateway;
+#   mac - mac address;
+#   ipPolicy - "static" if you have manually assigned IP information and "dhcp" if dhcp server is used
+#   dnsPolicy - "static" if you have manually assigned IP information and "dhcp" if dhcp server is used
+#   dnsServer1 = primary dns
+#   dnsServer2 - secondary dns;
+#
+
+#bind parameter list
+$device_name=@ARGV[0];
+$ip_policy=@ARGV[1];
+$ip=@ARGV[2];
+$mask=@ARGV[3];
+$gateway=@ARGV[4];
+
+$dns_policy=@ARGV[5];
+if($dns_policy eq "static"){
+	$dns_policy="no";
+}else{
+	$dns_policy="yes";
+}
+
+$dns1=@ARGV[6];
+$dns2=@ARGV[7];
+
+#set dns
+sub changeDns(){
+	@dns_output;
+
+	if($dns1 ne ""){
+		open(LOGFILE, "/etc/resolv.conf") or die $!;
+		
+	  #remove only DNS lines
+		foreach $line (<LOGFILE>) {
+			if(!($line =~ m/nameserver [\.\d]*/)){
+			  push(@dns_output, $line);
+			}
+		}
+		
+		
+		push(@dns_output, "nameserver $dns1\n");
+		
+		if($dns2 ne ""){
+			push(@dns_output, "nameserver $dns2\n");
+		}
+	
+		close(LOGFILE);
+
+		#write data to /etc/resolv.conf
+		open(LOGFILE, ">/etc/resolv.conf") or die $!;
+		print LOGFILE @dns_output;
+		close (LOGFILE);
+	}  
+}
+
+sub changeNic(){
+	open(NICFILE, "/etc/sysconfig/network-scripts/ifcfg-$device_name") or die $!;
+	@nic_output;
+	$ip_address_set=0;
+	$mask_set=0;
+	$gateway_set=0;
+	$dnspolicy_set=0;
+
+
+	foreach $line (<NICFILE>) {
+	
+		if($ip_policy ne ""){
+			$line =~ s/BOOTPROTO=(dhcp|static)/BOOTPROTO=$ip_policy/;
+		}
+
+	  if($ip_policy eq "static"
+		  or $dns_policy ne ""){
+
+			#change to static
+			
+
+			if($ip ne ""){
+				if($line =~ s/IPADDR=[\.\d]*/IPADDR=$ip/){
+					$ip_address_set=1;
+				}
+			}
+
+			if($mask ne ""){
+				if($line =~ s/NETMASK=[\.\d]*/NETMASK=$mask/){
+					$mask_set=1;
+				}
+			}
+
+			if($gateway ne ""){
+			$temp_gateway = $gateway;
+			if($gateway eq "[empty]"){
+			  $temp_gateway = "";
+			}
+			if($line =~ s/GATEWAY=[\.\d]*/GATEWAY=$temp_gateway/){
+				$gateway_set=1;
+			}
+			}
+		}  
+		
+		if($dns_policy ne ""){
+			if($line =~ s/PEERDNS=(yes|no)*/PEERDNS=$dns_policy/){
+				$dnspolicy_set=1;
+			}
+		}
+		  
+		#remove unnecessary lines if dhcp is enabled
+		if(not ($line =~ m/(IPADDR=[\.\d]*)|(NETMASK=[\.\d]*)|(GATEWAY=[\.\d]*)/ && $ip_policy eq "dhcp")){
+			push(@nic_output, $line);
+		}
+	}
+
+	close(NICFILE);
+
+	if($ip_policy eq "static"
+	  or $dns_policy ne ""){
+		if($ip ne ""
+			&& $ip_address_set==0){
+			push(@nic_output, "IPADDR=$ip\n");
+		}
+
+		if($mask ne ""
+		  && $mask_set==0){
+			push(@nic_output, "NETMASK=$mask\n");
+		}
+
+		if($gateway ne ""
+		  && $gateway_set==0){
+	if($gateway ne "[empty]"){
+			push(@nic_output, "GATEWAY=$gateway\n");
+	}else{
+			push(@nic_output, "GATEWAY=\n");
+	}
+		}
+		
+		if($dns_policy ne ""
+		  && $dnspolicy_set==0){
+			push(@nic_output, "PEERDNS=$dns_policy\n");
+		}
+	}
+	
+	#write data to /etc/sysconfig/network-scripts/ifcfg-<device>
+	
+	open(NICFILE, ">/etc/sysconfig/network-scripts/ifcfg-$device_name") or die $!;
+	print NICFILE @nic_output;
+	close (NICFILE);
+	
+	`service network restart`
+}
+
+if($device_name ne ""){
+	changeNic();
+}
+
+if($ip_policy eq "static"){
+	$dns_policy = "static";
+}
+
+if($dns_policy ne ""){
+	changeDns();
+}
+
