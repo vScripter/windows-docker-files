@@ -6,6 +6,7 @@ description="This image is pre-configured with PowerShell \
 Modules maintained by VMware, as well as the \
 VMware community."
 
+# set powershell to run on container start
 CMD ["C:\\windows\\system32\\windowspowershell\\v1.0\\powershell.exe"]
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
