@@ -1,2 +1,2 @@
-docker tag powercli-windowsservercore vscripter/powercli-windowsservercore:latest
-docker push vscripter/powercli-windowsservercore:latest
+docker tag powercli-windowsservercore vscripter/powercli-nanoserver:latest
+docker push vscripter/powercli-nanoserver:latest
