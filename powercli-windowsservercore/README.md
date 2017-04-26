@@ -3,6 +3,8 @@ Windows Server Core Docker image running popular PowerShell modules & Scripts fr
 
 > _Note: The main difference between this Docker Image and the Image distributed by VMware, is that this runs on Windows Server Core (vs. Ubuntu/Photon OS)._
 
+:heavy_exclamation_mark: To provide a cleaner startup experience, CEIP has been *ENABLED*, by default. If you would like to disable it, run `Set-PowerCLIConfiguration -Scope User -ParticipateInCeip $false`. _(for more information about CEIP run `help about_ceip`)_
+
 ## Image Summary
 ### Modules
 
