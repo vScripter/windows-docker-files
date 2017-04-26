@@ -1,5 +1,6 @@
 FROM microsoft/nanoserver
 
+# Setup metadata (MAINTAINER is deprecated)
 LABEL \
 author="Kevin Kirkpatrick" \
 description="This image is pre-configured with PowerShell \
