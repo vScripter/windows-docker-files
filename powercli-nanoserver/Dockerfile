@@ -11,6 +11,9 @@ COPY PowerCLI.ViCore /Modules/PowerCLI.ViCore
 COPY PowerCLI.Cis /Modules/PowerCLI.Cis
 COPY PowerCLI.Vds /Modules/PowerCLI.Vds
 
+# copy PowerCLI settings file over which enables CEIP, by default (also provides a cleaner startup experience)
+COPY PowerCLI_Settings.xml /Users/ContainerAdministrator/AppData/Roaming/VMware/PowerCLI
+
 # set powershell to run on container start
 CMD ["C:\\windows\\system32\\windowspowershell\\v1.0\\powershell.exe"]
 
@@ -19,15 +22,15 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 # install PowerCLI
 RUN Write-Output 'Installing PowerCLI...'; \
-Get-ChildItem C:\Modules -Directory -Filter PowerCLI* | foreach { Move-Item $_.FullName 'C:\Program Files\WindowsPowerShell\Modules' -Force};
+Get-ChildItem C:\Modules -Directory -Filter PowerCLI* | foreach { Move-Item $_.FullName 'C:\Program Files\WindowsPowerShell\Modules' -Force}; \
+Get-Item C:\Modules | Remove-Item -Force;
 
 # setup remainder of environment
 RUN Write-Output 'Setting up environment...'; \
 mkdir $home\Documents\WindowsPowerShell; \
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force; \
 Install-Module powervra -Force -Confirm:$false; \
-Install-Module powervro -Force -Confirm:$false; \
-mkdir c:\src;
+Install-Module powervro -Force -Confirm:$false;
 
 # setup PowerShell Profile
 COPY PSEnv.Functions.ps1 /Users/ContainerAdministrator/Documents/WindowsPowerShell
