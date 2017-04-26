@@ -1,3 +1,5 @@
+[![This image on DockerHub](https://img.shields.io/docker/pulls/vscripter/powercli-nanoserver.svg)](https://hub.docker.com/r/vscripter/powercli-nanoserver/)
+
 # powercli-nanoserver
 Windows Nano Server Docker image running popular PowerShell modules & Scripts from VMware, as well as the VMware community.
 
