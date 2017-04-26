@@ -6,6 +6,9 @@ description="This image is pre-configured with PowerShell \
 Modules maintained by VMware, as well as the \
 VMware community."
 
+# copy PowerCLI settings file over which enables CEIP, by default (also provides a cleaner startup experience)
+COPY PowerCLI_Settings.xml /Users/ContainerAdministrator/AppData/Roaming/VMware/PowerCLI
+
 # set powershell to run on container start
 CMD ["C:\\windows\\system32\\windowspowershell\\v1.0\\powershell.exe"]
 
