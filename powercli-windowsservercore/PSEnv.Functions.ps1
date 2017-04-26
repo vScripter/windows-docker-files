@@ -40,6 +40,12 @@ function Get-ConsoleStatus {
 
 } # end function Get-ConsoleStatus
 
+function Start-PowerCLI {
+
+    Get-Module -Name VMware* -ListAvailable | Import-Module | Out-Null
+
+} # end function Start-PowerCLI
+
 function Start-Environment {
 
     [CmdletBinding()]
