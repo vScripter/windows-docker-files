@@ -1,3 +1,5 @@
+[![This image on DockerHub](https://img.shields.io/docker/pulls/vscripter/powercli-windowsservercore.svg)](https://hub.docker.com/r/vscripter/powercli-windowsservercore)
+
 # powercli-windowsservercore
 Windows Server Core Docker image running popular PowerShell modules & Scripts from VMware, as well as the VMware community.
 
