@@ -26,9 +26,6 @@ $hostUI.DebugBackgroundColor   = 'DarkCyan'
 $hostUI.VerboseBackgroundColor = 'DarkBlue'
 $hostUI.VerboseForegroundColor = 'Cyan'
 
-# setup alias
-Set-Alias -Name Start-PowerCLI -Value Start-Environment
-
 $consoleStatusCheck = $null
 $consoleStatusCheck = Get-ConsoleStatus
 
@@ -40,3 +37,5 @@ Write-Host 'IsAdmin: ' -NoNewline        ; Write-Host "       $($consoleStatusCh
 Write-Host 'PSVersion: ' -NoNewline      ; Write-Host "     $($consoleStatusCheck.PSVersion)" -ForegroundColor Green
 Write-Host 'PSEdition: ' -NoNewline      ; Write-Host "     $($consoleStatusCheck.PSEdition)" -ForegroundColor Green
 Write-Host ' '
+
+Start-PowerCLI
