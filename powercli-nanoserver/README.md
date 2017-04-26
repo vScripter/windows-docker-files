@@ -5,7 +5,7 @@ More information can be found regarding PowerCLI Core in the documentation found
 
 > _Note: The main difference between this Docker Image and the Image distributed by VMware, is that this runs on Windows Nano Server (vs. Ubuntu/Photon OS)._
 
-:heavy_exclamation_mark: To provide a cleaner startup experience, CEIP has been *ENABLED*, by default. If you would like to disable it, run `Set-PowerCLIConfiguration -Scope User -ParticipateInCeip $false`. _(for more information about CEIP run `help about_ceip)_
+:heavy_exclamation_mark: To provide a cleaner startup experience, CEIP has been *ENABLED*, by default. If you would like to disable it, run `Set-PowerCLIConfiguration -Scope User -ParticipateInCeip $false`. _(for more information about CEIP run `help about_ceip`)_
 
 ## Image Summary
 ### Modules
