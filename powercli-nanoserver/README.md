@@ -15,8 +15,9 @@ More information can be found regarding PowerCLI Core in the documentation found
 | Module Name | Source |
 |:----|:----|
 | PowerCLI | [VMware Flings](https://labs.vmware.com/flings/powercli-core) |
-| powervro | PowerShell Gallery |
-| powervra | PowerShell Gallery |
+| powervRO | PowerShell Gallery |
+| powervRA | PowerShell Gallery |
+| PowerNSX | [PowerNSX on GitHub](https://github.com/vmware/powernsx/tree/master/module/platform/core/PowerNSX) |
 
 ### Scripts
 
