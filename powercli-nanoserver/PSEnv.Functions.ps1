@@ -30,10 +30,10 @@ function Get-ConsoleStatus {
 
         [PSCustomObject] @{
             ComputerName = $Env:ComputerName
-            User = $userName
-            IsAdmin = $runAsAdminCheck
-            PSVersion = $psVersionCheck
-            PSEdition = $psEditonCheck
+            User         = $userName
+            IsAdmin      = $runAsAdminCheck
+            PSVersion    = $psVersionCheck
+            PSEdition    = $psEditonCheck
         }
 
     } # end PROCESS block
@@ -107,7 +107,8 @@ function Get-Environment {
         $moduleList = @(
             'PowerCLI*',
             'PowervRA',
-            'PowervRO'
+            'PowervRO',
+            'PowerNSX'
         )
     )
 
