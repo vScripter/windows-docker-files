@@ -54,9 +54,9 @@ function Start-Environment {
         [System.String[]]
         $moduleList = @(
             'VMware.PowerCLI',
-            'powernsx',
-            'powervro',
-            'powervra'
+            'PowerNSX',
+            'PowervRO',
+            'PowervRA'
         )
     )
 
@@ -83,9 +83,9 @@ function Get-Environment {
         [System.String[]]
         $moduleList = @(
             'VMware*',
-            'powernsx',
-            'powervro',
-            'powervra'
+            'PowerNSX',
+            'PowervRO',
+            'PowervRA'
         )
     )
 

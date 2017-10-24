@@ -1,0 +1,19 @@
+﻿Command Used to Generate: Invoke-ScriptAnalyzer -Path (Get-Location) -Recurse|select rulename,severity,scriptname,line,message|ft -auto
+
+RuleName               Severity ScriptName               Line Message
+--------               -------- ----------               ---- -------
+PSUseCompatibleCmdlets  Warning VesterTemplate.Tests.ps1   74 'Get-VMHost' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'linux'
+PSUseCompatibleCmdlets  Warning VesterTemplate.Tests.ps1   74 'Get-VMHost' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'osx'
+PSUseCompatibleCmdlets  Warning VesterTemplate.Tests.ps1   74 'Get-VMHost' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'windows'
+PSUseCompatibleCmdlets  Warning VesterTemplate.Tests.ps1   75 'Get-VM' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'linux'
+PSUseCompatibleCmdlets  Warning VesterTemplate.Tests.ps1   75 'Get-VM' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'osx'
+PSUseCompatibleCmdlets  Warning VesterTemplate.Tests.ps1   75 'Get-VM' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'windows'
+PSShouldProcess         Warning Invoke-Vester.ps1          76 'Invoke-Vester' has the ShouldProcess attribute but does not call ShouldProcess/ShouldContinue.
+PSUseCompatibleCmdlets  Warning New-VesterConfig.ps1      157 'Get-VMHost' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'linux'
+PSUseCompatibleCmdlets  Warning New-VesterConfig.ps1      157 'Get-VMHost' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'osx'
+PSUseCompatibleCmdlets  Warning New-VesterConfig.ps1      157 'Get-VMHost' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'windows'
+PSUseCompatibleCmdlets  Warning New-VesterConfig.ps1      158 'Get-VM' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'linux'
+PSUseCompatibleCmdlets  Warning New-VesterConfig.ps1      158 'Get-VM' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'osx'
+PSUseCompatibleCmdlets  Warning New-VesterConfig.ps1      158 'Get-VM' is not compatible with PowerShell edition 'core', version '6.0.0-alpha' and OS 'windows'
+
+

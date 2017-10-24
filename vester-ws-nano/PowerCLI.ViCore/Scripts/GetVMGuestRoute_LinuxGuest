@@ -1,0 +1,53 @@
+#!/usr/bin/perl
+
+# *************************************************************************
+# Copyright 2009 VMware, Inc.  All rights reserved.
+# *************************************************************************
+
+#
+# This script is used by Get-VmGuestRoute cmdlet to retrieve configured routes on the guest OS
+#
+# PARAMETERS
+#	   None
+#
+# OUTPUT
+#   This script prints lines containing the following information:
+#      Destination=<destination>;Netmask=<netmask>;Gateway=<gateway>;Interface=<interface>;Persistent=<isPersistetnt>";
+#
+#   destination - destination address
+#   netmask - route netmask
+#   gateway - gateway ip
+#   interface - interface id
+#   isPersistent - "true" if the route is persistent or "false" if it's not
+
+$device_name;
+@route_output = `route`;
+
+my %route_file_cache;
+
+
+foreach $line (@route_output) {
+   if(not $line =~ m/(Destination\s*Gateway)|(Kernel IP routing table)/){
+      if($line =~ m/^([\w\.]*) *([\*\w\.]*) *([\w\.]*).* (\w*)$/){
+         $output="Destination=$1;Netmask=$3;Gateway=$2;Interface=$4;Persistent=";
+
+         #file content cache
+         if(not exists($route_file_cache{"$4"})){
+            $route_file_cache{"$4"} = `cat /etc/sysconfig/network-scripts/route-$4 2>/dev/null`;
+         }
+         
+         $interface = $4;
+         $gateway = $2;
+         $netmask = $3;
+         $destination = $1;
+
+         if($route_file_cache{"$interface"} =~ /GATEWAY\d=\Q$gateway\E\s*NETMASK\d=\Q$netmask\E\s*ADDRESS\d=\Q$destination\E\s*/ ){
+            $persistent = "true";
+         }else{
+            $persistent = "false";
+         }
+
+         print "$output$persistent;\n";
+      }
+   }
+}

@@ -1,0 +1,88 @@
+#!/usr/bin/perl
+
+# *************************************************************************
+# Copyright 2009 VMware, Inc.  All rights reserved.
+# *************************************************************************
+
+#
+# This script is used by Remove-VmGuestRoute cmdlet to delete routes on the guest OS
+#
+# PARAMETERS
+#	 destination - destination address
+#   netmask - route netmask
+#   gateway - gateway ip
+#   interface - interface id
+#   persistent - "true" if the route is persistent and otherwise "false". Persistent means that the route is available after OS(network) restart.
+#
+# USAGE
+#   The script is invoked with the following line:
+#      NewVMGuestRoute_LinuxGuest <destination> <netmask> <gateway> <interface>
+#
+# OUTPUT
+#   If this script prints output it is displayed as an error message to the user
+#
+#
+
+$destination=@ARGV[0];
+$netmask= @ARGV[1];
+
+$gateway=@ARGV[2];
+if($gateway == "*"){
+   $gateway = "";
+}
+
+$interface=@ARGV[3];
+$persistent=@ARGV[4];
+
+$netmask_string="netmask $netmask";
+
+if($gateway eq "" or $gateway eq "*"){
+   $gateway_string="";
+}else{
+   $gateway_string="gw $gateway";
+}
+
+
+
+
+`route del -net $destination $netmask_string $gateway_string dev $interface`;
+if($? == "0" && $persistent eq "true"){
+   $file_content = `cat /etc/sysconfig/network-scripts/route-$interface`;
+   
+   if($file_content =~ s/GATEWAY(\d)=\Q$gateway\E\s*NETMASK\d=\Q$netmask\E\s*ADDRESS\d=\Q$destination\E\s*//){
+
+       $counter = $1+1;
+       $replace = $counter-1;
+
+       OUT:{
+         while(1 == 1){
+            $modified = 0;
+
+            if($file_content =~ s/GATEWAY$counter/GATEWAY$replace/){
+               $modified = 1;
+            }
+
+            if($file_content =~ s/NETMASK$counter/NETMASK$replace/){
+               $modified = 1;
+            }
+
+            if($file_content =~ s/ADDRESS$counter/ADDRESS$replace/){
+               $modified = 1;
+            }
+
+            if($modified == 1){
+               $modified = 0;
+               $counter = $counter+1;
+               $replace = $counter-1;
+            }else{
+               last OUT;
+            }
+         }
+      }
+      
+      #write data to /etc/sysconfig/network-scripts/route-
+      open(ROUTEFILE, ">/etc/sysconfig/network-scripts/route-$interface") or die $!;
+      print ROUTEFILE $file_content;
+      close (ROUTEFILE);
+   }
+}
