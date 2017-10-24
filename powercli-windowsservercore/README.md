@@ -13,9 +13,9 @@ Windows Server Core Docker image running popular PowerShell modules & Scripts fr
 | Module Name | Source |
 |:----|:----|
 | PowerCLI | PowerShell Gallery |
-| powervro | PowerShell Gallery |
-| powervra | PowerShell Gallery |
-| powernsx | [PowerNSX on GitHub](https://github.com/vmware/powernsx/#master) |
+| PowervRO | PowerShell Gallery |
+| PowervRA | PowerShell Gallery |
+| PowerNSX | PowerShell Gallery |
 
 ### Scripts
 * Everything available in the [PowerCLI Example Scripts](https://github.com/vmware/PowerCLI-Example-Scripts) repository is available in a PSDrive `P:\`, which is mapped when the PSProfile is loaded.
