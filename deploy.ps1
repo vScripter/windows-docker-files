@@ -12,7 +12,7 @@ if ( $env:APPVEYOR_PULL_REQUEST_NUMBER -Or ! $env:APPVEYOR_REPO_BRANCH.Equals("m
 
 $files = ""
 Write-Host "Starting deploy" -ForegroundColor 'Yellow'
-docker login --username="$env:DOCKER_USER" --password="$env:DOCKER_PASS"
+docker login --username="$env:DOCKER_USER" --password-stdin="$env:DOCKER_PASS"
 
 if ( $env:APPVEYOR_PULL_REQUEST_NUMBER ) {
   Write-Host "Pull request $($env:APPVEYOR_PULL_REQUEST_NUMBER)" -ForegroundColor 'Yellow'
