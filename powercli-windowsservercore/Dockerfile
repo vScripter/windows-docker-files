@@ -21,10 +21,10 @@ Install-Module VMware.PowerCLI -Force -Confirm:$false; \
 Install-Module PowerNSX -Force -Confirm:$false; \
 Install-Module PowervRA -Force -Confirm:$false; \
 Install-Module PowervRO -Force -Confirm:$false; \
-mkdir c:\src; \
-Install-GitHubRepository -Owner vmware -Repository PowerCLI-Example-Scripts -Branch master -DestinationPath c:\src\; \
-Rename-Item c:\src\PowerCLI-Example-Scripts vmware -Force; \
-mkdir $env:appdata\VMware\PowerCLI;
+mkdir c:\src;
+#Install-GitHubRepository -Owner vmware -Repository PowerCLI-Example-Scripts -Branch master -DestinationPath c:\src\; \
+#Rename-Item c:\src\PowerCLI-Example-Scripts vmware -Force; \
+#mkdir $env:appdata\VMware\PowerCLI;
 
 # copy PowerCLI settings file over which enables CEIP, by default (also provides a cleaner startup experience)
 COPY PowerCLI_Settings.xml /Users/ContainerAdministrator/AppData/Roaming/VMware/PowerCLI
