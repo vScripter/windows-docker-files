@@ -37,3 +37,5 @@ Install-Module PowervRO -Force -Confirm:$false;
 # setup PowerShell Profile
 COPY PSEnv.Functions.ps1 /Users/ContainerAdministrator/Documents/WindowsPowerShell
 COPY Microsoft.PowerShell_profile.ps1 /Users/ContainerAdministrator/Documents/WindowsPowerShell
+
+# kickoff test build
