@@ -9,7 +9,7 @@ environment:
   DOCKER_USER:
     secure: AV71NGW/I1JvBlK3ajVvTw==
   DOCKER_PASS:
-    secure: uwijEmxL5kLuLU0w7Uub+122R4/qGQubbnHWbQLWvk8=
+    secure: mwwthyjc4HXdTuMKHKbmekkNuFnb0JOKmsHhundz+sc=
 install:
   - docker version
 build_script:
