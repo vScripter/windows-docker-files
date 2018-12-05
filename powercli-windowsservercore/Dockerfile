@@ -32,3 +32,5 @@ COPY PowerCLI_Settings.xml /Users/ContainerAdministrator/AppData/Roaming/VMware/
 # Setup PowerShell Profile
 COPY PSEnv.Functions.ps1 /Users/ContainerAdministrator/Documents/WindowsPowerShell
 COPY Microsoft.PowerShell_profile.ps1 /Users/ContainerAdministrator/Documents/WindowsPowerShell
+
+#update container

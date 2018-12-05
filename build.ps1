@@ -7,8 +7,8 @@ $ErrorActionPreference = 'Stop';
 $files = ""
 Write-Host Starting build -ForegroundColor 'Yellow'
 
-Write-Host Updating base images -ForegroundColor 'Yellow'
-docker pull microsoft/windowsservercore
+#Write-Host Updating base images -ForegroundColor 'Yellow'
+#docker pull microsoft/windowsservercore
 #docker pull microsoft/nanoserver
 
 if ( $env:APPVEYOR_PULL_REQUEST_NUMBER ) {
