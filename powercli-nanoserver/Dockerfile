@@ -31,7 +31,7 @@ Get-Item C:\Modules | Remove-Item -Force;
 RUN Write-Output 'Setting up environment...'; \
 mkdir $home\Documents\WindowsPowerShell; \
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force; \
-Install-Module PowervRA -Force -Confirm:$false; \
+#Install-Module PowervRA -Force -Confirm:$false; \
 Install-Module PowervRO -Force -Confirm:$false; \
 Install-Module PowerNSX -Force -Confirm:$false;
 
